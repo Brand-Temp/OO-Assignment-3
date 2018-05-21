@@ -19,7 +19,7 @@ public:
         return m_ballsToRemove.empty()&&m_ballsToAdd.empty();
     }
 
-    ChangeInPoolGame merge(ChangeInPoolGame &other);
+    ChangeInPoolGame merge(ChangeInPoolGame other);
 };
 
 #endif // CHANGEINPOOLGAME_H

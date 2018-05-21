@@ -50,3 +50,6 @@ HEADERS  += dialog.h \
     cueballdecorator.h \
     duplicationballdecorator.h
 
+DISTFILES += \
+    config.json
+
