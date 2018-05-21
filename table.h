@@ -14,6 +14,16 @@ class Table
 public:
     Table(float width, float height,float friction)
         :m_width(width), m_height(height), m_friction(friction){}
+
+    /**
+     * @brief Table - copy constructor for table
+     * @param other - pointer to table to be copied
+     */
+    Table(Table* other) {
+        m_width = other->width();
+        m_height = other->height();
+        m_friction = other->friction();
+    }
     virtual ~Table(){}
 
 

@@ -15,6 +15,18 @@ class Ball
 {
 public:
     Ball(){}
+
+    /**
+     * @brief Ball - copy constructor
+     * @param other - Ball to be copied
+     */
+    Ball(Ball* other) {
+        m_position = other->position();
+        m_velocity = other->velocity();
+        m_radius = other->radius();
+        m_mass = other->mass();
+        m_colour = other->colour();
+    }
     virtual ~Ball(){}
 
     virtual const QVector2D &position()const{return m_position;}

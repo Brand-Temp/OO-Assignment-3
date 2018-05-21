@@ -10,6 +10,15 @@
 
 #include "changeinpoolgame.h"
 
+/* IDEA:
+ * Poolgame as originator(for Momento)
+ * Creates a structure that stores a vector containing a copy
+ * of the balls in the m_balls vector, and a pointer pointing to
+ * a copy of the table.
+ * REQUIREMENTS:
+ * Copy constructor on Ball and Table class
+ */
+
 /**
  * @brief The PoolGame class runs the pool game, it is in charge of the physics of the pool game as well as
  * drawing the game
@@ -45,6 +54,22 @@ public:
      * @return the size of the game
      */
     QSize size(){return QSize(m_table->width(),m_table->height());}
+
+    /* IDEA:
+     * turn Momento into a template class which can work with other object
+     */
+
+    /**
+     * @brief createMomento - creates a new momento of the current game state
+     * @return a new Momento object containing a copy of the current game state
+     */
+    PoolGameMomento createMomento();
+
+    /**
+     * @brief setState - change the current state of the game
+     * @param m - a Momento containing the state to return to
+     */
+    void setState(PoolGameMomento m);
 
 private:
     /**
