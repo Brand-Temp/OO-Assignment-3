@@ -56,6 +56,7 @@ signals:
     void mousePressed(QMouseEvent * event);
     void mouseMoved(QMouseEvent * event);
     void mouseReleased(QMouseEvent * event);
+    void rPressed(QKeyEVent* event);
 
 public slots:
     void runSimulationStep();

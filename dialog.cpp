@@ -45,6 +45,12 @@ void Dialog::mouseReleaseEvent(QMouseEvent *event)
     emit mouseReleased(event);
 }
 
+void Dialog::keyPressEvent(QKeyEvent *event) {
+    if(event->key() == Qt::Key_R) {
+        emit rPressed(event);
+    }
+}
+
 
 Dialog::~Dialog()
 {

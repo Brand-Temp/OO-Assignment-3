@@ -10,13 +10,19 @@
 
 #include "changeinpoolgame.h"
 
+#include "momento.h"
+
 /* IDEA:
  * Poolgame as originator(for Momento)
  * Creates a structure that stores a vector containing a copy
  * of the balls in the m_balls vector, and a pointer pointing to
  * a copy of the table.
+ * TODO:
+ * Momento functions in poolgame
+ * Momento class
+ * The other class -- in this case PoolGame might be its own originator and caretaker, is that allowed?
  * REQUIREMENTS:
- * Copy constructor on Ball and Table class
+ * Copy constructor on Ball and Table class DONE
  */
 
 /**
@@ -56,7 +62,7 @@ public:
     QSize size(){return QSize(m_table->width(),m_table->height());}
 
     /* IDEA:
-     * turn Momento into a template class which can work with other object
+     * turn Momento into a template class which can work with other objects
      */
 
     /**

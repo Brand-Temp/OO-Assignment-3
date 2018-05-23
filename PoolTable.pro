@@ -48,7 +48,9 @@ HEADERS  += dialog.h \
     pocket.h \
     balldecorator.h \
     cueballdecorator.h \
-    duplicationballdecorator.h
+    duplicationballdecorator.h \
+    momento.h \
+    caretaker.h
 
 DISTFILES += \
     config.json
