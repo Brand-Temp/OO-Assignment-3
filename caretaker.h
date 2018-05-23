@@ -10,6 +10,6 @@ public:
     Caretaker() {}
 public slots:
     void rPressed(QKeyEvent* event);
-};s
+};
 
 #endif // CARETAKER_H
