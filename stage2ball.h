@@ -15,11 +15,14 @@ public:
     Stage2Ball(){}
     void setStrength(float strength){m_strength = strength;}
     // Ball interface
+    bool setCue(bool b) {m_isCue = b;}
+    void getCue() {return m_isCue;}
 public:
     void draw(QPainter &p);
 
 protected:
     float m_strength;
+    bool m_isCue = false;
 };
 
 /**

@@ -4,7 +4,7 @@
 #include "dialog.h"
 #include <QWidget>
 
-class Caretaker : public QObject{
+class Caretaker : public QWidget{
 private:
     std::vector<PoolGameMomento*> m_momentos;
     PoolGame* m_game;

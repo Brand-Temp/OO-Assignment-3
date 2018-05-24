@@ -28,7 +28,9 @@ SOURCES += main.cpp \
     util.cpp \
     changeinpoolgame.cpp \
     cueballdecorator.cpp \
-    duplicationballdecorator.cpp
+    duplicationballdecorator.cpp \
+    caretaker.cpp \
+    momento.cpp
 
 HEADERS  += dialog.h \
     poolgame.h \

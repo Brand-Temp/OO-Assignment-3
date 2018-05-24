@@ -61,6 +61,12 @@ public:
      */
     QSize size(){return QSize(m_table->width(),m_table->height());}
 
+    /**
+     * @brief getBalls
+     * @return the ball vector
+     */
+    std::vector<Ball*> getBalls() {return m_balls;}
+
     /* IDEA:
      * turn Momento into a template class which can work with other objects
      */
@@ -76,6 +82,13 @@ public:
      * @param m - a Momento containing the state to return to
      */
     void setState(PoolGameMomento m);
+
+signals:
+    /**
+     * @brief chekForMomento - signal emitted when the positions and velocities of ball have been updated
+     * Tells the caretaker to check for a momento creation
+     */
+    void checkForMomento();
 
 private:
     /**

@@ -52,6 +52,8 @@ void PoolGame::simulateTimeStep(float timeStep)
         if(b->velocity().length()<5)
             b->setVelocity(QVector2D(0,0));
     }
+
+    emit checkForMomento();
 }
 
 void PoolGame::draw(QPainter &p)
@@ -102,4 +104,16 @@ ChangeInPoolGame PoolGame::collide(Ball *b1, Ball *b2)
      ChangeInPoolGame changeFromB1 = b1->changeVelocity(mR * (vB - root) * collisionVector);
      ChangeInPoolGame changeFromB2 = b2->changeVelocity((root - vB) * collisionVector);
      return changeFromB1.merge(changeFromB2);
+}
+
+PoolGame::createMomento() {
+    PoolGameMomento m;
+    m.copyBalls(m_balls);
+    m.copyTable(m_table);
+    return m;
+}
+
+PoolGame::setState(PoolGameMomento m) {
+    m_balls = m.getBalls();
+    m_table = m.getTable();
 }

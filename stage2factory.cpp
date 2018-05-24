@@ -94,6 +94,7 @@ Ball *Stage2Factory::makeBall(const QJsonObject &config)
     {
         ball = new CueBallDecorator(ball,dialog);
         cueBallSet = true;
+        dynamic_cast<Stage2Ball*>(ball)->setCue(true);
     }
     return ball;
 }
