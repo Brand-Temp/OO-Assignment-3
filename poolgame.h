@@ -12,6 +12,8 @@
 
 #include "momento.h"
 
+#include "caretaker.h"
+
 /* IDEA:
  * Poolgame as originator(for Momento)
  * Creates a structure that stores a vector containing a copy
@@ -20,9 +22,12 @@
  * TODO:
  * Momento functions in poolgame
  * Momento class
- * The other class -- in this case PoolGame might be its own originator and caretaker, is that allowed?
+ * Caretaker class
  * REQUIREMENTS:
  * Copy constructor on Ball and Table class DONE
+ *
+ * NEW IDEA:
+ * instead of signals, implement a mediator between the poolgame and caretaker classes
  */
 
 /**
@@ -37,11 +42,17 @@ public:
      * @param m_table a pointer to a Table object, Poolgame takes ownership of this pointer
      * @param balls a vector of pointers to balls, Poolgame takes ownership of all the contained pointers
      */
-    PoolGame(Table * m_table,std::vector<Ball*> balls)
-        :m_table(m_table),m_balls(balls)
+    PoolGame(Table * table,std::vector<Ball*> balls)
+        : m_table(table),m_balls(balls)
     {}
 
-    ~PoolGame();
+    ~PoolGame() {
+        for(Ball * b: m_balls)
+        {
+            delete b;
+        }
+        delete m_table;
+    }
 
     /**
      * @brief simulate one timestep of the game
@@ -71,24 +82,32 @@ public:
      * turn Momento into a template class which can work with other objects
      */
 
+    /* IDEA:
+     * use an observer to interface between Game and Caretaker
+     */
+
     /**
      * @brief createMomento - creates a new momento of the current game state
      * @return a new Momento object containing a copy of the current game state
      */
-    PoolGameMomento createMomento();
+    PoolGameMomento* createMomento();
 
     /**
      * @brief setState - change the current state of the game
      * @param m - a Momento containing the state to return to
      */
-    void setState(PoolGameMomento m);
+    void setState(PoolGameMomento* m);
 
-signals:
     /**
-     * @brief chekForMomento - signal emitted when the positions and velocities of ball have been updated
-     * Tells the caretaker to check for a momento creation
+     * @brief setCaretaker - sets the caretaker
+     * @param c - a caretaker
      */
-    void checkForMomento();
+    void setCaretaker(Caretaker* c);
+
+    /**
+     * @brief rollback - call on the caretaker to rollback the board
+     */
+    void rollback();
 
 private:
     /**
@@ -102,6 +121,8 @@ private:
 
     Table * m_table;
     std::vector<Ball*> m_balls;
+
+    Caretaker* m_caretaker;
 };
 
 #endif // POOLGAME_H

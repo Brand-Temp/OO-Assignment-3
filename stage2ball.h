@@ -12,17 +12,22 @@
 class Stage2Ball : public Ball
 {
 public:
-    Stage2Ball(){}
+    Stage2Ball(){m_isCue = false; m_isComposite = false;}
     void setStrength(float strength){m_strength = strength;}
     // Ball interface
-    bool setCue(bool b) {m_isCue = b;}
-    void getCue() {return m_isCue;}
+    void setCue() {
+        m_isCue = true;
+    }
+    bool getCue() {return m_isCue;}
+    bool isComposite() {return m_isComposite;}
+    void setComposie(bool b) {m_isComposite = b;}
 public:
     void draw(QPainter &p);
 
 protected:
     float m_strength;
-    bool m_isCue = false;
+    bool m_isCue;
+    bool m_isComposite;
 };
 
 /**
@@ -35,6 +40,7 @@ public:
     CompositeBall():m_containedMass(0)
     {
         Ball::setRadius(-1);
+        m_isComposite = true;
     }
     virtual ~CompositeBall();
 
@@ -74,6 +80,8 @@ public:
      */
     void setRadius(float newRadius);
 
+    Ball* copy();
+
 protected:
     std::vector<Ball*> m_containedBalls;
     float m_containedMass;
@@ -89,7 +97,9 @@ class SimpleStage2Ball : public Stage2Ball
 {
 public:
     SimpleStage2Ball(){}
+    SimpleStage2Ball(SimpleStage2Ball* other) {m_position = other->position();}
     ChangeInPoolGame changeVelocity(const QVector2D &deltaV);
+    Ball* copy();
 
 };
 

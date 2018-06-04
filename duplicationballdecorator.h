@@ -17,6 +17,8 @@ public:
      * @return
      */
     ChangeInPoolGame changeVelocity(const QVector2D &deltaV);
+
+    DuplicationBallDecorator* copy();
 };
 
 #endif // DUPLICATIONBALLDECORATOR_H

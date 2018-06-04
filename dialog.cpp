@@ -47,7 +47,7 @@ void Dialog::mouseReleaseEvent(QMouseEvent *event)
 
 void Dialog::keyPressEvent(QKeyEvent *event) {
     if(event->key() == Qt::Key_R) {
-        emit rPressed(event);
+        m_game->rollback();
     }
 }
 

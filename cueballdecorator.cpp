@@ -6,6 +6,7 @@ CueBallDecorator::CueBallDecorator(Ball *b, Dialog *parent)
     connect(parent,&Dialog::mousePressed,this,&CueBallDecorator::mousePressed);
     connect(parent,&Dialog::mouseMoved,this,&CueBallDecorator::mouseMoved);
     connect(parent,&Dialog::mouseReleased,this,&CueBallDecorator::mouseReleased);
+    m_parent = parent;
 }
 
 void CueBallDecorator::draw(QPainter &p)
@@ -40,4 +41,10 @@ void CueBallDecorator::mouseReleased(QMouseEvent *event)
         clicked = false;
         setVelocity(4*(m_ball->position()-mousePos));
     }
+}
+
+Ball* CueBallDecorator::copy() {
+    CueBallDecorator* copy = new CueBallDecorator(getBall()->copy(),m_parent);
+
+    return copy;
 }

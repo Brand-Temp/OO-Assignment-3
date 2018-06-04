@@ -1,27 +1,32 @@
 #ifndef CARETAKER_H
 #define CARETAKER_H
 #include "momento.h"
-#include "dialog.h"
+
 #include <QWidget>
 
 class Caretaker : public QObject{
 private:
-    std::vector<PoolGameMomento*> m_momentos;
-    PoolGame* m_game;
+    std::vector<PoolGameMomento*> m_momentos; //! a vector of mementos
 public:
-    Caretaker() {}
     /**
      * @brief Caretaker - constructor
      * @param parent - parent dialog to connect to keypress signal
      * @param game - the game this caretaker looks after
      */
-    Caretaker(PoolGame* game, Dialog* parent) : m_game(game) {
-        connect(parent, &Dialog::rPressed, this, &Caretaker::rPressed);
-        connect(game, &PoolGame::checkForMomento, this, &Caretaker::checkForMomento);
-    }
-public slots:
-    void rPressed(QKeyEvent* event);
-    void checkForMomento();
+    Caretaker(QWidget* parent = 0);
+
+    /**
+     * @brief checkForMemento - checks if the cueball is in the same position in the most recently added memento
+     * @param m - a memento
+     * @return true if there is already a memento at the current position, false otherwise
+     */
+    bool checkForMemento(Ball* b);
+
+    void addMemento(PoolGameMomento* m);
+
+    PoolGameMomento* popMemento();
+
+    bool canRollback();
 };
 
 #endif // CARETAKER_H

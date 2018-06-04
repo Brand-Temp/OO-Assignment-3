@@ -1,15 +1,7 @@
 #include "poolgame.h"
+#include "cueballdecorator.h"
+#include <iostream>
 
-
-
-PoolGame::~PoolGame()
-{
-    for(Ball * b: m_balls)
-    {
-        delete b;
-    }
-    delete m_table;
-}
 
 void PoolGame::simulateTimeStep(float timeStep)
 {
@@ -20,9 +12,9 @@ void PoolGame::simulateTimeStep(float timeStep)
         totalChange = totalChange.merge(m_table->ballCollision(b));
     }
     //a collision between each possible pair of balls
-    for(int i = 0; i < m_balls.size();++i)
+    for(unsigned int i = 0; i < m_balls.size();++i)
     {
-        for(int j = i+1;j < m_balls.size();++j)
+        for(unsigned int j = i+1;j < m_balls.size();++j)
         {
             if(m_balls[i]->collidesWith(m_balls[j]))
             {
@@ -51,9 +43,17 @@ void PoolGame::simulateTimeStep(float timeStep)
         //if moving less than 5 pixels per second just stop
         if(b->velocity().length()<5)
             b->setVelocity(QVector2D(0,0));
-    }
 
-    emit checkForMomento();
+        // if cueball check if memento should be made and make
+        if(!(dynamic_cast<CueBallDecorator*>(b) == nullptr)) {
+            if (b->velocity() == QVector2D(0,0)) {
+                if (m_caretaker->checkForMemento(b)) {
+                    PoolGameMomento* newMemento = createMomento();
+                    m_caretaker->addMemento(newMemento);
+                }
+            }
+        }
+    }
 }
 
 void PoolGame::draw(QPainter &p)
@@ -106,14 +106,31 @@ ChangeInPoolGame PoolGame::collide(Ball *b1, Ball *b2)
      return changeFromB1.merge(changeFromB2);
 }
 
-PoolGame::createMomento() {
-    PoolGameMomento m;
-    m.copyBalls(m_balls);
-    m.copyTable(m_table);
+PoolGameMomento* PoolGame::createMomento() {
+    PoolGameMomento* m = new PoolGameMomento();
+    m->addTable(m_table);
+    for (Ball* b: m_balls) {
+        if(!(dynamic_cast<CueBallDecorator*>(b) == nullptr)) {
+            m->setCueBallPosition(b);
+        }
+        m->addBall(b->copy());
+    }
     return m;
 }
 
-PoolGame::setState(PoolGameMomento m) {
-    m_balls = m.getBalls();
-    m_table = m.getTable();
+void PoolGame::setState(PoolGameMomento* m) {
+    m_balls = m->getBalls();
+    m_table = m->getTable();
+}
+
+void PoolGame::setCaretaker(Caretaker *c) {
+    m_caretaker = c;
+}
+
+void PoolGame::rollback() {
+    if (m_caretaker->canRollback()) {
+        setState(m_caretaker->popMemento());
+    } else {
+        std::cout << "Cannot roll back" << std::endl;
+    }
 }

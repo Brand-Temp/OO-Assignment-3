@@ -83,3 +83,31 @@ ChangeInPoolGame SimpleStage2Ball::changeVelocity(const QVector2D &deltaV)
     m_velocity += deltaV;
     return ChangeInPoolGame();
 }
+
+Ball* CompositeBall::copy() {
+    CompositeBall* copy = new CompositeBall();
+    copy->setColour(m_colour);
+    copy->setMass(m_mass);
+    copy->setPosition(m_position);
+    copy->setRadius(m_radius);
+    copy->setStrength(m_strength);
+    copy->setVelocity(m_velocity);
+
+    for(Ball* b: m_containedBalls) {
+        copy->addBall(b);
+    }
+
+    return copy;
+}
+
+Ball* SimpleStage2Ball::copy() {
+    SimpleStage2Ball* copy = new SimpleStage2Ball();
+    copy->setColour(m_colour);
+    copy->setMass(m_mass);
+    copy->setPosition(m_position);
+    copy->setRadius(m_radius);
+    copy->setStrength(m_strength);
+    copy->setVelocity(m_velocity);
+
+    return copy;
+}

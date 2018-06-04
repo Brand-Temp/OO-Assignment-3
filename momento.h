@@ -2,33 +2,36 @@
 #define MOMENTO_H
 #include "ball.h"
 #include "table.h"
-#include "poolgame.h"
 
 class PoolGameMomento {
 protected:
     std::vector<Ball*> m_balls; //! A vector of Ball pointers, in this case a previous configuration of the pooltable class's balls
     Table* m_table; //! A table pointer, in this case a previous configuration of the pooltable class's table
-    friend class PoolGame;
+    QVector2D m_cueBallPosition;
 public:
     PoolGameMomento() {}
     ~PoolGameMomento() {}
 
     /**
-     * @brief copyBalls - copies the balls in vector balls into the vector m_balls
-     * @param balls - a vector of Ball*, the vector of balls in the poolgame class
+     * @brief getBalls
+     * @return the mementos balls
      */
-
-    void copyBalls(std::vector<Ball*> balls);
+    std::vector<Ball*> getBalls() {return m_balls;}
 
     /**
-     * @brief copyTable - copies the given table into m_table
-     * @param table - a Table, the table from the poolgame class
+     * @brief getTable
+     * @return the mementos table
      */
-
-    void copyTable(Table* table);
-
-    std::vector<Ball*> getBalls() {return m_balls;}
     Table* getTable() {return m_table;}
+
+    QVector2D getCueBallPosition() {return m_cueBallPosition;}
+
+    void setCueBallPosition(Ball* b) {
+        m_cueBallPosition = b->position();
+    }
+
+    void addBall(Ball* b) {m_balls.push_back(b);}
+    void addTable(Table* t) {m_table = t;}
 };
 
 #endif // MOMENTO_H

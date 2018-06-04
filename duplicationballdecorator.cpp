@@ -21,3 +21,8 @@ ChangeInPoolGame DuplicationBallDecorator::changeVelocity(const QVector2D &delta
     }
     return change;
 }
+
+DuplicationBallDecorator* DuplicationBallDecorator::copy() {
+    DuplicationBallDecorator* copy = new DuplicationBallDecorator(m_ball->copy());
+    return copy;
+}

@@ -21,6 +21,8 @@ public:
      */
     CueBallDecorator(Ball * b, Dialog * parent);
     void draw(QPainter &p);
+    Ball* getBall(){return m_ball;}
+    Ball* copy();
 public slots:
     void mousePressed(QMouseEvent * event);
     void mouseMoved(QMouseEvent * event);
@@ -30,6 +32,7 @@ private:
     QVector2D endpoint;
     QVector2D mousePos;
     bool clicked;
+    Dialog* m_parent;
 };
 
 #endif // CUEBALLDECORATOR_H
