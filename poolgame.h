@@ -109,6 +109,12 @@ public:
      */
     void rollback();
 
+    /**
+     * @brief randomBall - generate a random ball and return a pointer to it
+     * @return a ball*
+     */
+    void randomBall();
+
 private:
     /**
      * @brief collide two balls if they are in contact

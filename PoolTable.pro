@@ -30,7 +30,8 @@ SOURCES += main.cpp \
     cueballdecorator.cpp \
     duplicationballdecorator.cpp \
     caretaker.cpp \
-    momento.cpp
+    momento.cpp \
+    facade.cpp
 
 HEADERS  += dialog.h \
     poolgame.h \
@@ -52,7 +53,8 @@ HEADERS  += dialog.h \
     cueballdecorator.h \
     duplicationballdecorator.h \
     momento.h \
-    caretaker.h
+    caretaker.h \
+    facade.h
 
 DISTFILES += \
     config.json
