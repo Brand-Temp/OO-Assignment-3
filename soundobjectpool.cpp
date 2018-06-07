@@ -18,7 +18,7 @@ QSoundEffect* SoundObjectPool::acquireSound(int i) {
     return temp;
 }
 
-void SoundObjectPool::releaseSound(QSound *in) {
+void SoundObjectPool::releaseSound(QSoundEffect *in) {
     if (m_sounds.size() + 1 < max_size) {
         m_sounds.push_back(in);
     } else {

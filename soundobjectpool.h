@@ -2,14 +2,14 @@
 #define SOUNDOBJECTPOOL_H
 
 #include <QObject>
-#include <QSound>
+#include <QSoundEffect>
 
 class SoundObjectPool
 {
 public:
     static SoundObjectPool* getInstance();
     QSoundEffect* acquireSound(int i);
-    void releaseSound(QSound* in);
+    void releaseSound(QSoundEffect* in);
     void setMaxPoolSize(int size);
 private:
     SoundObjectPool();

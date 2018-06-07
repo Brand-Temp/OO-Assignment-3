@@ -141,21 +141,79 @@ void PoolGame::rollback() {
 }
 
 void PoolGame::randomBall() {
-    SimpleStage2Ball* ball = new SimpleStage2Ball();
-    ball->setCopy(false);
-    ball->setMass(rand() % 50+1);
-    ball->setPosition(QVector2D(rand() % int(m_table->width() - 5) + 5, rand() % int(m_table->height() - 5) + 5));
-    ball->setRadius(rand() % 20 + 5);
-    ball->setStrength(rand() % 10000000+1000);
-    if(rand()%5==0) {
-        ball->setStrength(std::numeric_limits<double>::infinity());
+    Stage2Ball* ball;
+
+    if(rand()%2==0) {
+        CompositeBall* temp = new CompositeBall();
+        temp->setCopy(false);
+        temp->setMass(rand() % 50+1);
+        temp->setPosition(QVector2D(rand() % int(m_table->width() - 5) + 5, rand() % int(m_table->height() - 5) + 5));
+        temp->setRadius(rand() % 20 + 5);
+        temp->setStrength(rand() % 10000000+1000);
+        if(rand()%5==0) {
+            temp->setStrength(std::numeric_limits<double>::infinity());
+        }
+        temp->setVelocity(QVector2D(rand()%200-100,rand()%200-100));
+        temp->setColour(QColor(rand()%255, rand()%255, rand()%255));
+        for(int i = 0; i < rand()%4+1; i++) {
+            temp->addBall(randomCompositeHelper(temp->radius(), temp->position()));
+        }
+        ball = temp;
+    } else {
+        SimpleStage2Ball* temp = new SimpleStage2Ball();
+        temp->setCopy(false);
+        temp->setMass(rand() % 50+1);
+        temp->setPosition(QVector2D(rand() % int(m_table->width() - 5) + 5, rand() % int(m_table->height() - 5) + 5));
+        temp->setRadius(rand() % 20 + 5);
+        temp->setStrength(rand() % 10000000+1000);
+        if(rand()%5==0) {
+            temp->setStrength(std::numeric_limits<double>::infinity());
+        }
+        temp->setVelocity(QVector2D(rand()%200-100,rand()%200-100));
+        temp->setColour(QColor(rand()%255, rand()%255, rand()%255));
+        ball = temp;
     }
-    ball->setVelocity(QVector2D(rand()%200-100,rand()%200-100));
-    ball->setColour(QColor(rand()%255, rand()%255, rand()%255));
     if(rand()%20==0){
         DuplicationBallDecorator* b = new DuplicationBallDecorator(ball);
         m_balls.push_back(b);
         return;
     }
     m_balls.push_back(ball);
+}
+
+Ball* PoolGame::randomCompositeHelper(float parentRadius, QVector2D parentPosition) {
+    Ball* ball;
+
+    if(rand()%10==0) {
+        CompositeBall* temp = new CompositeBall();
+        temp->setCopy(false);
+        temp->setMass(rand() % 50+1);
+        temp->setPosition(QVector2D(rand() % int(parentRadius - 5)*2 - int(parentRadius - 5), rand() % int(parentRadius - 5)*2 - int(parentRadius - 5)));
+        temp->setRadius(rand() % (int(parentRadius-5)+1)+5);
+        temp->setStrength(rand() % 10000000+1000);
+        if(rand()%5==0) {
+            temp->setStrength(std::numeric_limits<double>::infinity());
+        }
+        temp->setVelocity(QVector2D(rand()%200-100,rand()%200-100));
+        temp->setColour(QColor(rand()%255, rand()%255, rand()%255));
+        for(int i = 0; i < rand()%4+1; i++) {
+            temp->addBall(randomCompositeHelper(temp->radius(), temp->position()));
+        }
+        ball = temp;
+    } else {
+        SimpleStage2Ball* temp = new SimpleStage2Ball();
+        temp->setCopy(false);
+        temp->setMass(rand() % 50+1);
+        temp->setPosition(QVector2D(rand() % int(parentRadius - 5)*2 - int(parentRadius - 5), rand() % int(parentRadius - 5)*2 - int(parentRadius - 5)));
+        temp->setRadius(rand() % (int(parentRadius-5)+1)+5);
+        temp->setStrength(rand() % 10000000+1000);
+        if(rand()%5==0) {
+            temp->setStrength(std::numeric_limits<double>::infinity());
+        }
+        temp->setVelocity(QVector2D(rand()%200-100,rand()%200-100));
+        temp->setColour(QColor(rand()%255, rand()%255, rand()%255));
+        ball = temp;
+    }
+
+    return ball;
 }
