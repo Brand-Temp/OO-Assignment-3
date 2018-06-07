@@ -7,6 +7,7 @@
 class Caretaker : public QObject{
 private:
     std::vector<PoolGameMomento*> m_momentos; //! a vector of mementos
+    PoolGameMomento* m_rolledBack; //! most recent rolledback memento
 public:
     /**
      * @brief Caretaker - constructor

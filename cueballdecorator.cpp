@@ -36,15 +36,16 @@ void CueBallDecorator::mouseMoved(QMouseEvent *event)
 
 void CueBallDecorator::mouseReleased(QMouseEvent *event)
 {
-    if(clicked)
+    if(clicked && !m_isCopy)
     {
         clicked = false;
         setVelocity(4*(m_ball->position()-mousePos));
     }
+    clicked = false;
 }
 
 Ball* CueBallDecorator::copy() {
     CueBallDecorator* copy = new CueBallDecorator(getBall()->copy(),m_parent);
-
+    copy->setCopy(true);
     return copy;
 }

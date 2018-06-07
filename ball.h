@@ -33,6 +33,7 @@ public:
     virtual void setVelocity(const QVector2D &newVelocity){m_velocity = newVelocity;}
     virtual void setRadius(float newRadius){m_radius = newRadius;}
     virtual void setMass(float newMass){m_mass = newMass;}
+    virtual void setCopy(bool b) {m_isCopy = b;}
     virtual const QColor & colour(){return m_colour;}
 
     virtual void changePosition(const QVector2D &deltaX){m_position += deltaX;}
@@ -65,6 +66,7 @@ protected:
     float m_radius;
     float m_mass;
     QColor m_colour;
+    bool m_isCopy;
 
 };
 #endif // BALL_H

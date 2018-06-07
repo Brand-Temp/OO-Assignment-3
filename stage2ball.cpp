@@ -94,9 +94,9 @@ Ball* CompositeBall::copy() {
     copy->setVelocity(m_velocity);
 
     for(Ball* b: m_containedBalls) {
-        copy->addBall(b);
+        copy->addBall(b->copy());
     }
-
+    copy->setCopy(true);
     return copy;
 }
 
@@ -108,6 +108,6 @@ Ball* SimpleStage2Ball::copy() {
     copy->setRadius(m_radius);
     copy->setStrength(m_strength);
     copy->setVelocity(m_velocity);
-
+    copy->setCopy(true);
     return copy;
 }

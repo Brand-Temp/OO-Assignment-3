@@ -133,4 +133,7 @@ void PoolGame::rollback() {
     } else {
         std::cout << "Cannot roll back" << std::endl;
     }
+    for(Ball* b: m_balls) {
+        b->setCopy(false);
+    }
 }
