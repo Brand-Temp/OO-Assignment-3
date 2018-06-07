@@ -1,5 +1,7 @@
 #include "poolgame.h"
 #include "cueballdecorator.h"
+#include "stage2ball.h"
+#include "duplicationballdecorator.h"
 #include <iostream>
 
 
@@ -136,4 +138,24 @@ void PoolGame::rollback() {
     for(Ball* b: m_balls) {
         b->setCopy(false);
     }
+}
+
+void PoolGame::randomBall() {
+    SimpleStage2Ball* ball = new SimpleStage2Ball();
+    ball->setCopy(false);
+    ball->setMass(rand() % 50+1);
+    ball->setPosition(QVector2D(rand() % int(m_table->width() - 5) + 5, rand() % int(m_table->height() - 5) + 5));
+    ball->setRadius(rand() % 25 + 5);
+    ball->setStrength(rand() % 10000000+1000);
+    if(rand()%5==0) {
+        ball->setStrength(std::numeric_limits<double>::infinity());
+    }
+    ball->setVelocity(QVector2D(rand()%200-100,rand()%200-100));
+    ball->setColour(QColor(rand()%255, rand()%255, rand()%255));
+    if(rand()%20==0){
+        DuplicationBallDecorator* b = new DuplicationBallDecorator(ball);
+        m_balls.push_back(b);
+        return;
+    }
+    m_balls.push_back(ball);
 }
