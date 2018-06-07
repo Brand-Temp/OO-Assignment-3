@@ -8,6 +8,7 @@ QT       += core gui
 CONFIG += console
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets multimedia
 
 TARGET = PoolTable
 TEMPLATE = app
@@ -31,7 +32,8 @@ SOURCES += main.cpp \
     duplicationballdecorator.cpp \
     caretaker.cpp \
     momento.cpp \
-    facade.cpp
+    facade.cpp \
+    soundobjectpool.cpp
 
 HEADERS  += dialog.h \
     poolgame.h \
@@ -54,7 +56,8 @@ HEADERS  += dialog.h \
     duplicationballdecorator.h \
     momento.h \
     caretaker.h \
-    facade.h
+    facade.h \
+    soundobjectpool.h
 
 DISTFILES += \
     config.json

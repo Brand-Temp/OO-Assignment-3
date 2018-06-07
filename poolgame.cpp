@@ -145,7 +145,7 @@ void PoolGame::randomBall() {
     ball->setCopy(false);
     ball->setMass(rand() % 50+1);
     ball->setPosition(QVector2D(rand() % int(m_table->width() - 5) + 5, rand() % int(m_table->height() - 5) + 5));
-    ball->setRadius(rand() % 25 + 5);
+    ball->setRadius(rand() % 20 + 5);
     ball->setStrength(rand() % 10000000+1000);
     if(rand()%5==0) {
         ball->setStrength(std::numeric_limits<double>::infinity());
