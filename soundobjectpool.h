@@ -10,10 +10,12 @@ public:
     static SoundObjectPool* getInstance();
     QSound* acquireSound(int i);
     void releaseSound(QSound* in);
+    void setMaxPoolSize(int size);
 private:
     SoundObjectPool();
 protected:
-    QSound* m_sounds[];
+    std::vector<QSound*> m_sounds;
+    int max_size;
 };
 
 #endif // SOUNDOBJECTPOOL_H
