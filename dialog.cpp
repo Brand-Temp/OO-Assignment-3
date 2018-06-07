@@ -7,8 +7,7 @@ constexpr float fps = 60;
 constexpr float timeStep = 0.01;
 
 Dialog::Dialog(QWidget *parent)
-    :QDialog(parent),m_game(nullptr),m_framerateTimer(new QTimer())
-    ,m_timestepTimer(new QTimer()),m_secondTimer(new QTimer())
+    :QDialog(parent),m_game(nullptr),m_framerateTimer(new QTimer()),m_timestepTimer(new QTimer())
 {
 
 
@@ -21,10 +20,8 @@ void Dialog::start(PoolGame *game)
     this->resize(m_game->size());
     connect(m_framerateTimer,SIGNAL(timeout()),this,SLOT(update()));
     connect(m_timestepTimer,SIGNAL(timeout()),this,SLOT(runSimulationStep()));
-    connect(m_secondTimer,SIGNAL(timeout()),this,SLOT(secondTimer()));
     m_framerateTimer->start(1000/fps);
     m_timestepTimer->start(1000*timeStep);
-    m_secondTimer->start(5000);
 }
 
 void Dialog::paintEvent(QPaintEvent *)
@@ -60,14 +57,9 @@ Dialog::~Dialog()
     delete m_game;
     delete m_framerateTimer;
     delete m_timestepTimer;
-    delete m_secondTimer;
 }
 
 void Dialog::runSimulationStep()
 {
     m_game->simulateTimeStep(timeStep);
-}
-
-void Dialog::secondTimer() {
-    m_game->randomBall();
 }

@@ -66,12 +66,10 @@ signals:
 
 public slots:
     void runSimulationStep();
-    void secondTimer();
 private:
     PoolGame * m_game;
     QTimer * m_framerateTimer;
     QTimer * m_timestepTimer;
-    QTimer* m_secondTimer;
 };
 
 #endif // DIALOG_H
