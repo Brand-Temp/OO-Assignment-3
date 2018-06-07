@@ -11,8 +11,9 @@
 #include "changeinpoolgame.h"
 
 #include "momento.h"
-
 #include "caretaker.h"
+
+#include "soundobjectpool.h"
 
 /* IDEA:
  * Poolgame as originator(for Momento)
@@ -115,6 +116,12 @@ public:
      */
     void randomBall();
 
+    /**
+     * @brief setSoundPool - sets m_soundPool
+     * @param pool - a SoundObjectPool*
+     */
+    void setSoundPool(SoundObjectPool* pool) {m_soundPool = pool;}
+
 private:
     /**
      * @brief collide two balls if they are in contact
@@ -129,6 +136,7 @@ private:
     std::vector<Ball*> m_balls;
 
     Caretaker* m_caretaker;
+    SoundObjectPool* m_soundPool;
 };
 
 #endif // POOLGAME_H
