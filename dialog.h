@@ -52,26 +52,18 @@ public:
      */
     void mouseReleaseEvent(QMouseEvent *event);
 
-    /**
-     * @brief keyPressEvent emits key press signal
-     * @param event
-     */
-    void keyPressEvent(QKeyEvent* event);
-
 signals:
     void mousePressed(QMouseEvent * event);
     void mouseMoved(QMouseEvent * event);
     void mouseReleased(QMouseEvent * event);
-    void rPressed(QKeyEvent* event);
 
 public slots:
     void runSimulationStep();
-    void secondTimer();
-private:
+
+protected:
     PoolGame * m_game;
     QTimer * m_framerateTimer;
     QTimer * m_timestepTimer;
-    QTimer* m_secondTimer;
 };
 
 #endif // DIALOG_H

@@ -9,7 +9,7 @@ void SoundObjectPool::setMaxPoolSize(int size) {
     max_size = size;
 }
 
-QSoundEffect* SoundObjectPool::acquireSound(int i) {
+QSoundEffect* SoundObjectPool::acquireSound() {
     if(m_sounds.size() == 0) {
         return new QSoundEffect();
     }

@@ -1,5 +1,6 @@
 {
 "stage2" : true,
+"stage3" : true,
 "table" : {
  "colour":"green",
  "size":{

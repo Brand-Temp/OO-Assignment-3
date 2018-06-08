@@ -33,7 +33,10 @@ SOURCES += main.cpp \
     caretaker.cpp \
     momento.cpp \
     facade.cpp \
-    soundobjectpool.cpp
+    soundobjectpool.cpp \
+    randomballgenerator.cpp \
+    stage3game.cpp \
+    stage3dialog.cpp
 
 HEADERS  += dialog.h \
     poolgame.h \
@@ -57,8 +60,14 @@ HEADERS  += dialog.h \
     momento.h \
     caretaker.h \
     facade.h \
-    soundobjectpool.h
+    soundobjectpool.h \
+    randomballgenerator.h \
+    stage3game.h \
+    stage3dialog.h
 
 DISTFILES += \
     config.json
+
+RESOURCES += \
+    resources.qrc
 

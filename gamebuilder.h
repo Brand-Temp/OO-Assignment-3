@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "poolgame.h"
+#include "stage3game.h"
 #include "ball.h"
 #include "table.h"
 #include "abstractfactory.h"
@@ -39,6 +40,11 @@ public:
      * @return pointer to the created poolgame
      */
     PoolGame* getGame();
+    /**
+     * @brief getStage3Game create a game with the stage three extensions
+     * @return pointer to game
+     */
+    Stage3Game* getStage3Game();
 
 private:
     std::vector<Ball*> m_balls;

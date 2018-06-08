@@ -10,11 +10,6 @@
 
 #include "changeinpoolgame.h"
 
-#include "momento.h"
-#include "caretaker.h"
-
-#include "soundobjectpool.h"
-
 /* IDEA:
  * Poolgame as originator(for Momento)
  * Creates a structure that stores a vector containing a copy
@@ -47,7 +42,7 @@ public:
         : m_table(table),m_balls(balls)
     {}
 
-    ~PoolGame() {
+    virtual ~PoolGame() {
         for(Ball * b: m_balls)
         {
             delete b;
@@ -59,7 +54,7 @@ public:
      * @brief simulate one timestep of the game
      * @param timeStep is the period of time that this timestep is simulating
      */
-    void simulateTimeStep(float timeStep);
+    virtual void simulateTimeStep(float timeStep);
 
     /**
      * @brief draws all elements of the game, table and balls in that order
@@ -79,55 +74,9 @@ public:
      */
     std::vector<Ball*> getBalls() {return m_balls;}
 
-    /* IDEA:
-     * turn Momento into a template class which can work with other objects
-     */
+    int stage() {return m_stage;}
 
-    /* IDEA:
-     * use an observer to interface between Game and Caretaker
-     */
-
-    /**
-     * @brief createMomento - creates a new momento of the current game state
-     * @return a new Momento object containing a copy of the current game state
-     */
-    PoolGameMomento* createMomento();
-
-    /**
-     * @brief setState - change the current state of the game
-     * @param m - a Momento containing the state to return to
-     */
-    void setState(PoolGameMomento* m);
-
-    /**
-     * @brief setCaretaker - sets the caretaker
-     * @param c - a caretaker
-     */
-    void setCaretaker(Caretaker* c);
-
-    /**
-     * @brief rollback - call on the caretaker to rollback the board
-     */
-    void rollback();
-
-    /**
-     * @brief randomBall - generate a random ball and return a pointer to it
-     */
-    void randomBall();
-
-    /**
-     * @brief randomCompositeHelper - helper function for making random inner balls on a composite;
-     * @return a ball *
-     */
-    Ball* randomCompositeHelper(float parentRadius, QVector2D parentPosition);
-
-    /**
-     * @brief setSoundPool - sets m_soundPool
-     * @param pool - a SoundObjectPool*
-     */
-    void setSoundPool(SoundObjectPool* pool) {m_soundPool = pool;}
-
-private:
+protected:
     /**
      * @brief collide two balls if they are in contact
      * @param b1
@@ -139,9 +88,7 @@ private:
 
     Table * m_table;
     std::vector<Ball*> m_balls;
-
-    Caretaker* m_caretaker;
-    SoundObjectPool* m_soundPool;
+    int m_stage = 1;
 };
 
 #endif // POOLGAME_H

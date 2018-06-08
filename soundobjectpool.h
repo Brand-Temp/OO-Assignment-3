@@ -8,7 +8,7 @@ class SoundObjectPool
 {
 public:
     static SoundObjectPool* getInstance();
-    QSoundEffect* acquireSound(int i);
+    QSoundEffect* acquireSound();
     void releaseSound(QSoundEffect* in);
     void setMaxPoolSize(int size);
 private:

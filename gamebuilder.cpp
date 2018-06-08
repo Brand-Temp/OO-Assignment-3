@@ -35,8 +35,20 @@ void GameBuilder::buildTable(const QJsonObject &tableJSon)
 PoolGame *GameBuilder::getGame()
 {
     //create the game and reset the member variables
+
     PoolGame * result = new PoolGame(m_table,std::move(m_balls));
     m_table = nullptr;
     m_balls.clear();
+    return result;
+}
+
+Stage3Game *GameBuilder::getStage3Game()
+{
+    //create the game and reset the member variables
+
+    Stage3Game * result = new Stage3Game(m_table,std::move(m_balls));
+    m_table = nullptr;
+    m_balls.clear();
+    result->setStage(3);
     return result;
 }
