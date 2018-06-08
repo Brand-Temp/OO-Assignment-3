@@ -112,9 +112,14 @@ public:
 
     /**
      * @brief randomBall - generate a random ball and return a pointer to it
-     * @return a ball*
      */
     void randomBall();
+
+    /**
+     * @brief randomCompositeHelper - helper function for making random inner balls on a composite;
+     * @return a ball *
+     */
+    Ball* randomCompositeHelper(float parentRadius, QVector2D parentPosition);
 
     /**
      * @brief setSoundPool - sets m_soundPool

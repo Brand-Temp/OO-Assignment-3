@@ -9,16 +9,16 @@ void SoundObjectPool::setMaxPoolSize(int size) {
     max_size = size;
 }
 
-QSound* SoundObjectPool::acquireSound(int i) {
+QSoundEffect* SoundObjectPool::acquireSound(int i) {
     if(m_sounds.size() == 0) {
-        return new QSound();
+        return new QSoundEffect();
     }
-    QSound* temp = m_sounds.back();
+    QSoundEffect* temp = m_sounds.back();
     m_sounds.pop_back();
     return temp;
 }
 
-void SoundObjectPool::releaseSound(QSound *in) {
+void SoundObjectPool::releaseSound(QSoundEffect *in) {
     if (m_sounds.size() + 1 < max_size) {
         m_sounds.push_back(in);
     } else {
