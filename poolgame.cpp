@@ -150,9 +150,6 @@ void PoolGame::randomBall() {
         temp->setPosition(QVector2D(rand() % int(m_table->width() - 5) + 5, rand() % int(m_table->height() - 5) + 5));
         temp->setRadius(rand() % 20 + 5);
         temp->setStrength(rand() % 10000000+1000);
-        if(rand()%5==0) {
-            temp->setStrength(std::numeric_limits<double>::infinity());
-        }
         temp->setVelocity(QVector2D(rand()%200-100,rand()%200-100));
         temp->setColour(QColor(rand()%255, rand()%255, rand()%255));
         for(int i = 0; i < rand()%4+1; i++) {
@@ -191,13 +188,27 @@ Ball* PoolGame::randomCompositeHelper(float parentRadius, QVector2D parentPositi
         temp->setPosition(QVector2D(rand() % int(parentRadius - 5)*2 - int(parentRadius - 5), rand() % int(parentRadius - 5)*2 - int(parentRadius - 5)));
         temp->setRadius(rand() % (int(parentRadius-5)+1)+5);
         temp->setStrength(rand() % 10000000+1000);
-        if(rand()%5==0) {
-            temp->setStrength(std::numeric_limits<double>::infinity());
-        }
         temp->setVelocity(QVector2D(rand()%200-100,rand()%200-100));
         temp->setColour(QColor(rand()%255, rand()%255, rand()%255));
         for(int i = 0; i < rand()%4+1; i++) {
             temp->addBall(randomCompositeHelper(temp->radius(), temp->position()));
+        }
+        // reposition ball to ensure it is fully enclose:
+        if(temp->position().x() + temp->radius() + parentPosition.x() > parentPosition.x()+parentRadius) {
+            int difference = temp->position().x() + temp->radius() + parentPosition.x() - parentPosition.x()+parentRadius;
+            temp->changePosition(QVector2D(difference, 0));
+        }
+        if(temp->position().x() - temp->radius() + parentPosition.x() < parentPosition.x() - parentRadius) {
+            int difference = temp->position().x() - temp->radius() + parentPosition.x() - parentPosition.x()-parentRadius;
+            temp->changePosition(QVector2D(difference, 0));
+        }
+        if(temp->position().y() + temp->radius() + parentPosition.y() > parentPosition.y()+parentRadius) {
+            int difference = temp->position().y() + temp->radius() + parentPosition.y() - parentPosition.y()+parentRadius;
+            temp->changePosition(QVector2D(0, difference));
+        }
+        if(temp->position().y() - temp->radius() + parentPosition.y() < parentPosition.y() - parentRadius) {
+            int difference = temp->position().y() - temp->radius() + parentPosition.y() - parentPosition.y()-parentRadius;
+            temp->changePosition(QVector2D(0, difference));
         }
         ball = temp;
     } else {
@@ -212,6 +223,23 @@ Ball* PoolGame::randomCompositeHelper(float parentRadius, QVector2D parentPositi
         }
         temp->setVelocity(QVector2D(rand()%200-100,rand()%200-100));
         temp->setColour(QColor(rand()%255, rand()%255, rand()%255));
+        // reposition ball to ensure it is fully enclose:
+        if(temp->position().x() + temp->radius() + parentPosition.x() > parentPosition.x()+parentRadius) {
+            int difference = temp->position().x() + temp->radius() + parentPosition.x() - parentPosition.x()+parentRadius;
+            temp->changePosition(QVector2D(difference, 0));
+        }
+        if(temp->position().x() - temp->radius() + parentPosition.x() < parentPosition.x() - parentRadius) {
+            int difference = temp->position().x() - temp->radius() + parentPosition.x() - parentPosition.x()-parentRadius;
+            temp->changePosition(QVector2D(difference, 0));
+        }
+        if(temp->position().y() + temp->radius() + parentPosition.y() > parentPosition.y()+parentRadius) {
+            int difference = temp->position().y() + temp->radius() + parentPosition.y() - parentPosition.y()+parentRadius;
+            temp->changePosition(QVector2D(0, difference));
+        }
+        if(temp->position().y() - temp->radius() + parentPosition.y() < parentPosition.y() - parentRadius) {
+            int difference = temp->position().y() - temp->radius() + parentPosition.y() - parentPosition.y()-parentRadius;
+            temp->changePosition(QVector2D(0, difference));
+        }
         ball = temp;
     }
 
