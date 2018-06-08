@@ -59,7 +59,7 @@ public:
      * @brief setSoundPool - sets m_soundPool
      * @param pool - a SoundObjectPool*
      */
-    void setSoundPool(SoundObjectPool* pool) {m_soundPool = pool;}
+    void setSoundPool(SoundObjectPool* pool);
 
     /**
      * @brief randomBall - gets a random ball from the generator and adds it to m_balls
@@ -78,6 +78,8 @@ public:
      * @brief playBackground plays background music
      */
     void playBackground();
+
+    ChangeInPoolGame collide(Ball *b1, Ball *b2);
 protected:
     Caretaker* m_caretaker;
     SoundObjectPool* m_soundPool;

@@ -1,7 +1,9 @@
 #include "facade.h"
+#include <QApplication>
+#include <QCoreApplication>
 #include <time.h>
 
-Facade::Facade()
+Facade::Facade(int argc, char *argv[])
 {
 
 }

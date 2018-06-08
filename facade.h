@@ -11,7 +11,7 @@
 class Facade
 {
 public:
-    Facade();
+    Facade(int argc, char *argv[]);
     /**
      * @brief makeGame - creates the classes necessary for a game
      */

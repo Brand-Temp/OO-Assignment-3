@@ -1,4 +1,5 @@
 #include "stage3game.h"
+#include "stage2table.h"
 #include "cueballdecorator.h"
 #include <iostream>
 
@@ -48,12 +49,13 @@ void Stage3Game::simulateTimeStep(float timeStep)
         totalChange = totalChange.merge(m_table->ballCollision(b));
     }
     if (!totalChange.empty()) {
-        QSoundEffect* s = m_soundPool->acquireSound();
-        s->setSource(QUrl::fromLocalFile(":/resources/sounds/tableCollision.wav"));
-        s->setLoopCount(1);
-        s->setVolume(1);
-        s->play();
-        m_soundPool->releaseSound(s);
+        QSoundEffect* s = m_soundPool->acquireSound("break");
+        if (s == nullptr) {
+           m_soundPool->releaseSound(s);
+        } else {
+            s->play();
+            m_soundPool->releaseSound(s);
+        }
     }
     //a collision between each possible pair of balls
     for(unsigned int i = 0; i < m_balls.size();++i)
@@ -101,9 +103,59 @@ void Stage3Game::simulateTimeStep(float timeStep)
 }
 
 void Stage3Game::playBackground() {
-    QSoundEffect* s = m_soundPool->acquireSound();
-    s->setVolume(1);
-    s->setLoopCount(QSoundEffect::Infinite);
-    s->play();
-    std::cout<<"Playing music" << std::endl;
+
+}
+
+ChangeInPoolGame Stage3Game::collide(Ball *b1, Ball *b2)
+{
+    //using the code provided for the collision mechanics
+
+     //calculate their mass ratio
+     float mR = b2->mass() / b1->mass();
+
+     //calculate the axis of collision
+     QVector2D collisionVector = b2->position() - b1->position();
+     collisionVector.normalize();
+
+    //the proportion of each balls velocity along the axis of collision
+     double vA = QVector2D::dotProduct(collisionVector, b1->velocity());
+     double vB = QVector2D::dotProduct(collisionVector, b2->velocity());
+     //the balls are moving away from each other so do nothing
+     if (vA <= 0 && vB >= 0) {
+      return ChangeInPoolGame();
+     }
+
+     //The velocity of each ball after a collision can be found by solving the quadratic equation
+     //given by equating momentum and energy before and after the collision and finding the velocities
+     //that satisfy this
+     //-(mR+1)x^2 2*(mR*vB+vA)x -((mR-1)*vB^2+2*vA*vB)=0
+     //first we find the discriminant
+     double a = -(mR + 1);
+     double b = 2 * (mR * vB + vA);
+     double c = -((mR - 1) * vB * vB + 2 * vA * vB);
+     double discriminant = sqrt(b * b - 4 * a * c);
+     double root = (-b + discriminant)/(2 * a);
+     //only one of the roots is the solution, the other pertains to the current velocities
+     if (root - vB < 0.01) {
+       root = (-b - discriminant)/(2 * a);
+     }
+
+
+     //The resulting changes in velocity for ball A and B
+     ChangeInPoolGame changeFromB1 = b1->changeVelocity(mR * (vB - root) * collisionVector);
+     ChangeInPoolGame changeFromB2 = b2->changeVelocity((root - vB) * collisionVector);
+     QSoundEffect* s = m_soundPool->acquireSound("ball");
+     if (s == nullptr) {
+         m_soundPool->releaseSound(s);
+         return changeFromB1.merge(changeFromB2);
+     } else {
+        s->play();
+     }
+     m_soundPool->releaseSound(s);
+     return changeFromB1.merge(changeFromB2);
+}
+
+void Stage3Game::setSoundPool(SoundObjectPool *pool)  {
+    m_soundPool = pool;
+    dynamic_cast<Stage2Table*>(m_table)->setSoundPool(pool);
 }

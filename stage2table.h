@@ -6,6 +6,7 @@
 
 #include "table.h"
 #include "pocket.h"
+#include "soundobjectpool.h"
 /**
  * @brief The Stage2Table class is a concrete version of the Table class specific to stage one of the assignment
  */
@@ -25,9 +26,12 @@ public:
      */
     void draw(QPainter &p);
 
+    void setSoundPool(SoundObjectPool* pool) {m_soundPool = pool;}
+
 private:
     QColor m_colour;
     std::vector<Pocket*> m_pockets;
+    SoundObjectPool* m_soundPool = nullptr;
 
     // Table interface
 public:

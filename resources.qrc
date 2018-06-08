@@ -1,5 +1,7 @@
 <RCC>
     <qresource prefix="/resources">
         <file>sounds/tableCollision.wav</file>
+        <file>sounds/ballCollision.wav</file>
+        <file>sounds/ballBreak.wav</file>
     </qresource>
 </RCC>

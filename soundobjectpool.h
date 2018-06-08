@@ -8,14 +8,17 @@ class SoundObjectPool
 {
 public:
     static SoundObjectPool* getInstance();
-    QSoundEffect* acquireSound();
+    QSoundEffect* acquireSound(std::string s);
     void releaseSound(QSoundEffect* in);
     void setMaxPoolSize(int size);
 private:
     SoundObjectPool();
 protected:
-    std::vector<QSoundEffect*> m_sounds;
+    QSoundEffect* ball;
+    QSoundEffect* table;
+    QSoundEffect* bbreak;
     int max_size;
+    int curr_size;
 };
 
 #endif // SOUNDOBJECTPOOL_H

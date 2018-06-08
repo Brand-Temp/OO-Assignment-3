@@ -3,12 +3,12 @@
 
 int main(int argc, char *argv[])
 {
-    QApplication a(argc, argv);
+    QApplication c(argc, argv);
 
-    Facade game;
+    Facade game(argc, argv);
     game.makeGame();
     game.showGame();
 
-    return a.exec();
+    return c.exec();
 
 }

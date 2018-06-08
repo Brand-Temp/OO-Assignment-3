@@ -29,8 +29,19 @@ ChangeInPoolGame Stage2Table::ballCollision(Ball *b)
         return b->changeVelocity(QVector2D(-b->velocity().x()*2,0));
 
     //same but vertical
-    if((b->position().y()<b->radius() && b->velocity().y()<0) || (b->position().y()>height()-b->radius() && b->velocity().y()>0))
-       return b->changeVelocity(QVector2D(0,-b->velocity().y()*2));
+    if((b->position().y()<b->radius() && b->velocity().y()<0) || (b->position().y()>height()-b->radius() && b->velocity().y()>0)) {
+        if (m_soundPool == nullptr) {
+            return b->changeVelocity(QVector2D(0,-b->velocity().y()*2));
+        } else {
+            QSoundEffect* s = m_soundPool->acquireSound("table");
+            if(s == nullptr) {
+                return b->changeVelocity(QVector2D(0,-b->velocity().y()*2));
+            }
+            s->play();
+            m_soundPool->releaseSound(s);
+            return b->changeVelocity(QVector2D(0,-b->velocity().y()*2));
+        }
+    }
 
     return ChangeInPoolGame();
 }
